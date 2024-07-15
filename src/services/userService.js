@@ -34,16 +34,26 @@ const register = async (data, id) => {
 
 const login = async (data) => {
      const { email, password } = data;
-
+ 
      const user = await userRepository.findUserByEmail(email);
-
-     if (user && await argon2.verify(user.password, password)) {
-          return user;
-     } 
-
-     return null;
-}
-
+ 
+     if (!user) {
+         console.error('User or password not found');
+         return null;
+     }
+ 
+     try {
+         if (await argon2.verify(user.password, password)) {
+             return user;
+         } else {
+             console.error('Password verification failed');
+             return null;
+         }
+     } catch (error) {
+         console.error('Argon2 verification error:', error);
+         return null;
+     }
+ };
 module.exports = {
      register,
      login

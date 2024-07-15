@@ -3,7 +3,7 @@ const db = require('./prisma');
 const findUserByEmail = async (email) => {
      return await db.user.findUnique({
          where: { email: email },
-         select: { email: true, password: true, id: true }
+         omit: { password: true }
      });
  }
 

@@ -6,6 +6,7 @@ model User {
 
      
      sessions  Session[]
+     role      Role @default(USER)
 }
 
 model Session {
@@ -14,4 +15,10 @@ model Session {
      expiresAt DateTime
 
      user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+enum Role{
+     ADMIN
+     USER
+     VENDOR
 }
