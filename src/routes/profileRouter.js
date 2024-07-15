@@ -7,16 +7,17 @@ const adminRouter = require('./userRouters/adminRouter');
 const customerRouter = require('./userRouters/customerRouter');
 const vendorRouter = require('./userRouters/vendorRouter');
 
-// Example role constants (adjust according to your actual roles)
 const Roles = {
     ADMIN: 'ADMIN',
-    CUSTOMER: 'CUSTOMER',
+    CUSTOMER: 'USER',
     VENDOR: 'VENDOR'
 };
 
 // General Profile Route to redirect based on role
 router.get('/', (req, res) => {
-    const userRole = req.user.role;
+    const userRole = req.user?.role;
+
+    console.log('Redirecting user with role:', userRole);
 
     if (userRole === Roles.ADMIN) {
         return res.redirect('/profile/admin');
@@ -28,7 +29,6 @@ router.get('/', (req, res) => {
         return res.status(403).json({ message: 'Forbidden' });
     }
 });
-
 router.use('/admin', roleCheck([Roles.ADMIN]), adminRouter);
 router.use('/customer', roleCheck([Roles.CUSTOMER]), customerRouter);
 router.use('/vendor', roleCheck([Roles.VENDOR]), vendorRouter);

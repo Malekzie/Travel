@@ -4,7 +4,7 @@
          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
            <svg
              xmlns="http://www.w3.org/2000/svg"
-             class="h-5 w-5"
+             class="w-5 h-5"
              fill="none"
              viewBox="0 0 24 24"
              stroke="currentColor">
@@ -29,11 +29,11 @@
            <li><a>Item 3</a></li>
          </ul>
        </div>
-       <a class="btn btn-ghost text-xl">Travel Experts</a>
+       <a class="text-xl btn btn-ghost" href="/">Travel Experts</a>
        <%- include ('../partials/_themeControl.ejs') %>
      </div>
-     <div class="navbar-center hidden lg:flex">
-       <ul class="menu menu-horizontal px-1">
+     <div class="hidden navbar-center lg:flex">
+       <ul class="px-1 menu menu-horizontal">
          <li><a>Item 1</a></li>
          <li>
            <details>
@@ -48,9 +48,13 @@
        </ul>
      </div>
      <div class="navbar-end">
-          <div class="form-control px-3">
-             <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
-           </div>
-          <a class="btn" href="/auth">Profile</a>
-     </div>
+      <div class="px-3 form-control">
+          <input type="text" placeholder="Search" class="w-24 input input-bordered md:w-auto" />
+      </div>
+      <% if (user) { %>
+          <a class="btn" href="/profile">Profile</a>
+      <% } else { %>
+          <a class="btn" href="/auth">Auth</a>
+      <% } %>
+  </div>
    </div>

@@ -1,19 +1,22 @@
 // middlewares/roleCheck.js
 const roleCheck = (roles) => {
-     return (req, res, next) => {
-         const user = req.user; // assuming user is attached to req after authentication
- 
-         if (!user) {
-             return res.status(401).json({ message: 'Unauthorized' });
-         }
- 
-         if (!roles.includes(user.role)) {
-             return res.status(403).json({ message: 'Forbidden' });
-         }
- 
-         next();
-     };
- };
- 
- module.exports = roleCheck;
- 
+    return (req, res, next) => {
+
+
+        const user = req.user; // assuming user is attached to req after authentication
+
+        if (!user) {
+            console.log('User not found');
+            return res.status(401).render('pages/unauthorized', { title: 'Unauthorized' });
+        }
+
+        if (!roles.includes(user.role)) {
+            console.log('User role not allowed:', user.role);
+            return res.status(403).send('Forbidden');
+        }
+
+        next();
+    };
+};
+
+module.exports = roleCheck;

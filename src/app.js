@@ -3,10 +3,14 @@ const app = express();
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
+const authenticateJWT = require('./middleware/authenticateJWT');
+const attachUser = require('./middleware/attachUser');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(authenticateJWT);
+app.use(attachUser);
 
 //setting up the view engine
 app.set('view engine', 'ejs');
@@ -20,10 +24,6 @@ app.set("layout extractScripts", true);
 // Static Files
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
-// Setting Areas
-app.set('/admin', path.join(__dirname, '../src/views/Areas/Admin'));
-app.set('/customer', path.join(__dirname, '../src/views/Areas/Customer'));
-app.set('/vendor', path.join(__dirname, '../src/views/Areas/Vendor'));
 
 //Routes
 app.get('/', (req, res) => {
@@ -34,9 +34,11 @@ app.get('/', (req, res) => {
 const authRouter = require('./routes/authRouter');
 app.use('/auth', authRouter);
 
-const profilerRouter = require('./routes/profileRouter');
-app.use('/profile', profilerRouter);
+const profileRouter = require('./routes/profileRouter');
+app.use('/profile', authenticateJWT, profileRouter);
 
-
+app.get('*', (req, res) => {
+     res.render('pages/404', {title: 'Page Not Found', layout: false});
+});
 
 module.exports = app;

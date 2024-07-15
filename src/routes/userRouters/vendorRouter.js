@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Example Vendor Route
 router.get('/dashboard', (req, res) => {
-    res.render('Areas/Vendor/dashboard', { title: 'Vendor Dashboard' });
+    res.render('pages/Areas/Vendor/dashboard', { title: 'Vendor Dashboard' });
 });
 
 module.exports = router;

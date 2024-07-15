@@ -5,7 +5,7 @@ const jwt = require('../utils/jwt');
 
 const register = async (req, res) => {
     const data = req.body;
-    console.log(data);
+
 
     const rules = {
         username: 'required',
@@ -34,34 +34,36 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-     const data = req.body;
-     try {
-         const user = await userService.login(data);
- 
-         if (!user) {
-             return res.status(401).send('Invalid credentials');
-         }
- 
-         const token = jwt.generateToken(user);
-         const refreshToken = jwt.generateRefreshToken(user);
- 
-         res.cookie('token', token, {
-             httpOnly: true,
-             secure: process.env.NODE_ENV === 'production',
-             sameSite: 'strict'
-         });
- 
-         res.cookie('refreshToken', refreshToken, {
-             httpOnly: true,
-             secure: process.env.NODE_ENV === 'production',
-             sameSite: 'strict'
-         });
-         res.redirect('/profile');
-     } catch (error) {
-         console.error("Login error:", error);
-         res.status(500).send('Internal server error');
-     }
- };
+    const data = req.body;
+    try {
+        const user = await userService.login(data);
+
+        if (!user) {
+            return res.status(401).send('Invalid credentials');
+        }
+
+        const token = jwt.generateToken(user);
+        const refreshToken = jwt.generateRefreshToken(user);
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        });
+
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        });
+
+        res.redirect('/profile');
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).send('Internal server error');
+    }
+};
+
 
 const refresh = async (req, res) => {
      const { refreshToken } = req.body;
