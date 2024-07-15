@@ -11,9 +11,6 @@ importers:
       '@prisma/client':
         specifier: ^5.16.2
         version: 5.16.2(prisma@5.16.2)
-      TravelExperts:
-        specifier: 'link:'
-        version: 'link:'
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.39)

@@ -16,7 +16,14 @@ app.set("layout extractScripts", true);
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
 
+
 //Routes
+
+// Routers
+const authRouter = require('./routes/authRouter');
+
+app.use('/auth', authRouter);
+
 app.get('/', (req, res) => {
      res.render('pages/index', {title: 'Home'});
 });
