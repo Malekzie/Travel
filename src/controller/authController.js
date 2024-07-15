@@ -1,6 +1,7 @@
 require('dotenv').config();
 const validate = require('../utils/validator');
 const userService = require('../services/userService');
+const jwt = require('../utils/jwt');
 
 const register = async (req, res) => {
     const data = req.body;
@@ -41,15 +42,48 @@ const login = async (req, res) => {
             return res.status(401).send('Invalid credentials');
         }
 
-        // Implement session handling or token generation here
+        const token =  jwt.generateToken(user);
+        const refreshToken = jwt.generateRefreshToken(user);
+     
+          res.cookie('token', token, {
+               httpOnly: true,
+               secure: process.env.NODE_ENV === 'production',
+               sameSite: 'strict'
+          })
 
+          res.cookie('refreshToken', refreshToken, {
+               httpOnly: true,
+               secure: process.env.NODE_ENV === 'production',
+               sameSite: 'strict'
+          })
+          res.redirect('/profile')
     } catch (error) {
         console.error("Login error:", error);
         res.status(500).send('Internal server error');
     }
 };
 
+const refresh = async (req, res) => {
+     const { refreshToken } = req.body;
+
+     if (!refreshToken) {
+          return res.status(400).send('Refresh token is required');
+     }
+
+     try {
+          const user = await jwt.verifyRefreshToken(refreshToken);
+          
+          const newToken = jwt.generateToken(user);
+
+          res.json({ token: newToken });
+     } catch(error) {
+          console.error("Refresh token error:", error);
+          res.status(403).send('Invalid Refresh Token');
+     }
+}
+
 module.exports = {
     register,
-    login
+    login,
+    refresh
 };

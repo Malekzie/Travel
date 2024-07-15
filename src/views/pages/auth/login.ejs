@@ -7,19 +7,19 @@
          </p>
        </div>
        <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-         <form class="card-body" method="post" action="/auth/login">
+         <form class="card-body" method="post" action="/auth/login" id="loginForm">
            <div class="form-control">
              <label class="label">
                <span class="label-text">Email</span>
              </label>
-             <input type="email" placeholder="email" class="input input-bordered" required />
+             <input type="email" placeholder="email" name="email" class="input input-bordered" required />
            </div>
 
            <div class="form-control">
              <label class="label">
                <span class="label-text">Password</span>
              </label>
-             <input type="password" placeholder="password" class="input input-bordered" required />
+             <input type="password" placeholder="password" name="password" class="input input-bordered" required />
              <label class="label">
                <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
              </label>
@@ -35,3 +35,36 @@
        </div>
      </div>
    </div>
+
+   <script>
+     document.getElementById('loginForm').addEventListener('submit', async function(event) {
+         event.preventDefault();
+
+         const formData = new FormData(this);
+         const data = {
+             email: formData.get('email'),
+             password: formData.get('password')
+         };
+
+         const response = await fetch('/auth/login', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify(data)
+         });
+
+         if (response.ok) {
+             const result = await response.json();
+             // Store tokens (you might want to use secure storage in a real app)
+             localStorage.setItem('token', result.token);
+             localStorage.setItem('refreshToken', result.refreshToken);
+
+             // Redirect to profile
+             window.location.href = result.redirectUrl;
+         } else {
+             // Handle errors (e.g., show an error message)
+             console.error('Login failed');
+         }
+     });
+ </script>
