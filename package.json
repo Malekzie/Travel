@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.js",
-    "build:css": "postcss public/assets/css/tailwind.css -o public/assets/css/output.css --watch"
+    "build:css": "postcss public/assets/css/tailwind.css -o public/assets/css/output.css --watch",
+    "migrate": "prisma migrate dev --name"
   },
   "keywords": [],
   "author": "Robbie Soriano",
