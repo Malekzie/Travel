@@ -14,7 +14,9 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^5.16.2",
+    "@prisma/extension-accelerate": "^1.1.0",
     "autoprefixer": "^10.4.19",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-ejs-layouts": "^2.5.1",
@@ -22,9 +24,11 @@
     "postcss": "^8.4.39",
     "postcss-cli": "^11.0.0",
     "prisma": "^5.16.2",
-    "tailwindcss": "^3.4.4"
+    "tailwindcss": "^3.4.5",
+    "validatorjs": "^3.22.1"
   },
   "devDependencies": {
+    "argon2": "^0.40.3",
     "daisyui": "^4.12.10"
   }
 }

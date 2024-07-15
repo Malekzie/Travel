@@ -3,6 +3,9 @@ const app = express();
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 //setting up the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -18,14 +21,13 @@ app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
 
 //Routes
-
-// Routers
-const authRouter = require('./routes/authRouter');
-
-app.use('/auth', authRouter);
-
 app.get('/', (req, res) => {
      res.render('pages/index', {title: 'Home'});
 });
+// Routers
+const authRouter = require('./routes/authRouter');
+app.use('/auth', authRouter);
+
+
 
 module.exports = app;
