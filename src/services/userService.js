@@ -2,10 +2,10 @@ const argon2 = require('argon2');
 const userRepository = require('../repositories/userRepository');
 const sessionRepository = require('../repositories/sessionRepository');
 const { uploadImageToS3 } = require('../utils/awsUtils');
-const { saveImageUrlToDatabase } = require('../repositories/userRepository');
+const { saveImageUrlToDatabase } = require('../repositories/prisma');
 const db = require('../repositories/prisma');
 
-const register = async (data, id) => {
+const register = async (data) => {
     //Check if user exists
     const existingUser = await userRepository.findUserByEmail(data.email);
 
@@ -20,10 +20,9 @@ const register = async (data, id) => {
             data: {
                 username: data.username,
                 email: data.email,
-                password: hashedPassword
+                password: hashedPassword,
             }
         });
-
         await transaction.profile.create({
             data: {
                 userId: user.id,

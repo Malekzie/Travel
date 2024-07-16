@@ -3,14 +3,14 @@ model Profile {
      username    String?
      firstName   String?
      lastName    String?
-     email       String?
+     email       String
      phone       String?
      dateOfBirth DateTime?
      nationality String?
      gender      Gender?
      address     Address[]
 
-     userId String
+     userId String @unique
      user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
@@ -28,6 +28,6 @@ model Address {
      country  String?
      zip      String?
 
-     profileId String
+     profileId String @unique
      profile   Profile @relation(references: [id], fields: [profileId], onDelete: Cascade)
 }
