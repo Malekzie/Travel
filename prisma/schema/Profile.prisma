@@ -1,0 +1,33 @@
+model Profile {
+     id          String    @id @default(uuid())
+     username    String?
+     firstName   String?
+     lastName    String?
+     email       String?
+     phone       String?
+     dateOfBirth DateTime?
+     nationality String?
+     gender      Gender?
+     address     Address[]
+
+     userId String
+     user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+enum Gender {
+     MAN
+     WOMAN
+     OTHER
+}
+
+model Address {
+     id       String @id @default(uuid())
+     address  String?
+     city     String?
+     province String?
+     country  String?
+     zip      String?
+
+     profileId String
+     profile   Profile @relation(references: [id], fields: [profileId], onDelete: Cascade)
+}

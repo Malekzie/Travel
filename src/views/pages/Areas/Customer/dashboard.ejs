@@ -1,1 +1,37 @@
-Personal Details
+<main class="h-screen px-12 py-3 rounded-lg shadow-xl">
+	<div class="flex justify-between pb-2 border-b border-black">
+		<div>
+			<h1 class="text-2xl font-semibold">Personal Details</h1>
+			<p>Update your info and find out how it's used</p>
+		</div>
+		<div class="avatar">
+			<button
+				class="w-16 h-auto btn-circle btn"
+				onclick="profilePic.showModal()">
+				<div class="relative w-16 h-16">
+					<ion-icon
+						id="fallbackIcon"
+						name="person-circle-outline"
+						class="absolute inset-0 m-auto text-4xl"
+						style="display: block;"></ion-icon>
+					<img
+						id="profileImage"
+						class="object-cover w-full h-full rounded-full"
+						src="<%= user.profileImageUrl || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' %>"
+						alt="Profile Picture"
+						onload="hideFallbackIcon()"
+						onerror="showFallbackIcon(this)" />
+				</div>
+			</button>
+		</div>
+	</div>
+
+     <%- include ('../../../partials/customer/_personalDetails.ejs') %>
+
+     
+</main>
+
+<!-- Profile Pic upload -->
+<%- include('../../../partials/_profilePic.ejs') %>
+
+

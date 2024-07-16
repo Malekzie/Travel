@@ -2,6 +2,7 @@ require('dotenv').config();
 const validate = require('../utils/validator');
 const userService = require('../services/userService');
 const jwt = require('../utils/jwt');
+const { uploadProfilePicture } = require('../services/userService');
 
 const register = async (req, res) => {
     const data = req.body;
@@ -84,8 +85,34 @@ const refresh = async (req, res) => {
      }
 }
 
+
+const uploadProfilePictureHandler = async (req, res) => {
+    try {
+        const result = await uploadImageToS3(req.file);
+        const imageUrl = result.Location; // URL of the uploaded image
+
+        // Save imageUrl to your database associated with the user
+        await saveImageUrlToDatabase(req.user.id, imageUrl);
+
+        res.json({ imageUrl });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to upload image' });
+    }
+};
+
+const logout = (req, res) => {
+    // Clear the cookies
+    res.clearCookie('token');
+    res.clearCookie('refreshToken');
+
+    // Redirect to login page or home page
+    res.redirect('/auth/login');
+};
+
 module.exports = {
     register,
     login,
-    refresh
+    refresh,
+    uploadProfilePictureHandler,
+    logout
 };

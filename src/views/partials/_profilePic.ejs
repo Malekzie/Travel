@@ -1,0 +1,70 @@
+<dialog
+	id="profilePic"
+	class="modal">
+	<div class="modal-box">
+		<button
+			class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2"
+			onclick="profilePic.close()"
+			>✕</button
+		>
+		<h3 class="text-lg font-bold text-center"
+			>Select an image to upload</h3
+		>
+		<form
+			id="uploadForm"
+			enctype="multipart/form-data"
+			class="flex flex-col items-center mt-4 space-y-4"
+               method="POST"
+               action="/auth/upload"
+               >
+			<div class="relative w-24 h-24">
+				<ion-icon
+					id="fallbackIcon"
+					name="person-circle-outline"
+					class="absolute inset-0 m-auto text-6xl text-gray-400"
+					style="display: block;"></ion-icon>
+				<img
+					id="profileImage"
+					class="object-cover w-full h-full rounded-full"
+					src="<%= user.profileImageUrl || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' %>"
+					alt="Profile Picture"
+					onload="hideFallbackIcon()"
+					onerror="showFallbackIcon(this)" />
+			</div>
+			<input
+				type="file"
+				name="profilePicture"
+				id="profilePicture"
+				accept="image/*"
+				class="w-full max-w-xs file-input"
+				required />
+			<button
+				type="submit"
+				class="w-full max-w-xs btn btn-primary"
+				>Save</button
+			>
+		</form>
+	</div>
+	<form
+		method="dialog"
+		class="modal-backdrop">
+		<button>Close</button>
+	</form>
+</dialog>
+
+<script>
+	function hideFallbackIcon() {
+	    const fallbackIcon = document.getElementById('fallbackIcon');
+	    if (fallbackIcon) {
+	        fallbackIcon.style.display = 'none';
+	    }
+	}
+
+	function showFallbackIcon(img) {
+	    img.style.display = 'none'; // Hide the broken image
+	    const fallbackIcon = document.getElementById('fallbackIcon');
+	    if (fallbackIcon) {
+	        fallbackIcon.style.display = 'block'; // Show the fallback icon
+	    }
+	}
+</script>

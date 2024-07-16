@@ -25,8 +25,14 @@ const createUser = async (data) => {
      })
 }
 
+const saveImageUrlToDatabase = async (userId, imageUrl) => {
+     // Your database logic here
+     // Example: await User.findByIdAndUpdate(userId, { profileImageUrl: imageUrl });
+ };
+
 module.exports = {
      findUserByEmail,
      findUserById,
-     createUser
+     createUser,
+     saveImageUrlToDatabase
 }

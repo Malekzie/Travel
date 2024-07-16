@@ -1,7 +1,7 @@
 
 <!-- Side Content -->
-<div class="hero bg-base-200 min-h-screen">
-     <div class="hero-content flex-col lg:flex-row-reverse">
+<div class="min-h-screen hero bg-base-200">
+     <div class="flex-col hero-content lg:flex-row-reverse">
        <div class="text-center lg:text-left">
          <h1 class="text-5xl font-bold">Register now!</h1>
          <p class="py-6">
@@ -9,7 +9,7 @@
          </p>
        </div>
 <!-- Form -->
-       <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+       <div class="w-full max-w-sm shadow-2xl card bg-base-100 shrink-0">
          <form class="card-body" action="/auth/register" method="post">
 
            <div class="form-control">
@@ -56,13 +56,13 @@
                     class="input input-bordered" 
                     required />
            </div>
-           <div class="form-control mt-6">
+           <div class="mt-6 form-control">
              <button class="btn btn-primary">Register</button>
            </div>
          </form>
          <div class="divider divider-neutral">OR</div>
          <div class="flex justify-center my-2">
-               <a class="btn btn-info" href="/auth/login">Already have an account?</a>
+               <a class="btn btn-neutral" href="/auth/login">Already have an account?</a>
          </div>
        </div>
      </div>

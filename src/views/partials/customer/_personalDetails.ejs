@@ -1,0 +1,76 @@
+<!-- views/partials/personalDetails.ejs -->
+<% console.log('Profile Data:', profile); %>
+<div class="mt-6 space-y-4">
+    <div class="flex justify-between pb-2 border-b border-gray-300">
+        <div>
+            <span class="block font-semibold">Name</span>
+            <span class="block text-gray-500">
+                <%= profile.firstName ? profile.firstName : 'First name not provided' %> 
+                <%= profile.lastName ? profile.lastName : 'Last name not provided' %>
+            </span>
+        </div>
+        <a href="#" class="text-blue-500 hover:underline">Edit</a>
+    </div>
+    <div class="flex justify-between pb-2 border-b border-gray-300">
+        <div>
+            <span class="block font-semibold">Display name</span>
+            <span class="block text-gray-500"><%= profile.username ? profile.username : 'Username not provided' %></span>
+        </div>
+        <a href="#" class="text-blue-500 hover:underline">Edit</a>
+    </div>
+    <div class="flex justify-between pb-2 border-b border-gray-300">
+        <div>
+            <span class="block font-semibold">Email address</span>
+            <span class="block text-gray-500">
+                <%= profile.email ? profile.email : 'Email not provided' %> 
+                <% if (profile.email) { %><span class="text-green-500">Verified</span><% } %>
+            </span>
+            <span class="text-sm text-gray-500">This is the email address you use to sign in. It's also where we send your booking confirmations.</span>
+        </div>
+        <a href="#" class="text-blue-500 hover:underline">Edit</a>
+    </div>
+    <div class="flex justify-between pb-2 border-b border-gray-300">
+        <div>
+            <span class="block font-semibold">Phone number</span>
+            <span class="block text-gray-500"><%= profile.phone ? profile.phone : 'Phone number not provided' %></span>
+            <span class="text-sm text-gray-500">Properties or attractions you book will use this number if they need to contact you.</span>
+        </div>
+        <a href="#" class="text-blue-500 hover:underline">Edit</a>
+    </div>
+    <div class="flex justify-between pb-2 border-b border-gray-300">
+        <div>
+            <span class="block font-semibold">Date of birth</span>
+            <span class="block text-gray-500">
+                <%= profile.dateOfBirth ? new Date(profile.dateOfBirth).toLocaleDateString() : 'Date of birth not provided' %>
+            </span>
+        </div>
+        <a href="#" class="text-blue-500 hover:underline">Edit</a>
+    </div>
+    <div class="flex justify-between pb-2 border-b border-gray-300">
+        <div>
+            <span class="block font-semibold">Nationality</span>
+            <span class="block text-gray-500"><%= profile.nationality ? profile.nationality : 'Nationality not provided' %></span>
+        </div>
+        <a href="#" class="text-blue-500 hover:underline">Edit</a>
+    </div>
+    <div class="flex justify-between pb-2 border-b border-gray-300">
+        <div>
+            <span class="block font-semibold">Gender</span>
+            <span class="block text-gray-500"><%= profile.gender ? profile.gender : 'Gender not provided' %></span>
+        </div>
+        <a href="#" class="text-blue-500 hover:underline">Edit</a>
+    </div>
+    <div class="flex justify-between pb-2 border-b border-gray-300">
+        <div>
+            <span class="block font-semibold">Address</span>
+            <% if (profile.addresses && profile.addresses.length > 0) { %>
+                <% profile.addresses.forEach(address => { %>
+                    <span class="block text-gray-500"><%= address.address %>, <%= address.city %>, <%= address.province %>, <%= address.country %>, <%= address.zip %></span>
+                <% }); %>
+            <% } else { %>
+                <span class="block text-gray-500">No address provided</span>
+            <% } %>
+        </div>
+        <a href="#" class="text-blue-500 hover:underline">Edit</a>
+    </div>
+</div>
