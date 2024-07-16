@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title><%= title %></title>
-     <link rel="stylesheet" href="/assets/css/output.css">
+     <%- include ('../partials/global/_head.ejs') %>
 </head>
-<body>
-     <%- include ('../partials/_customerSidebar.ejs') %>
-
-     <%- body %>
-     <%- include ('../partials/_footer.ejs') %>
-</body>
+<body class="flex flex-col h-screen">
+     <div class="flex flex-1">
+             <%- include('../partials/_customerSidebar.ejs') %>
+         <div class="flex flex-col flex-1">
+             <main class="flex-1 p-4 overflow-y-auto">
+                 <%- body %>
+             </main>
+         </div>
+     </div>
+     <footer class="mt-3 shadow-lg rounded-t-2xl">
+         <%- include('../partials/_footer.ejs') %>
+     </footer>
+     <%- include ('../partials/global/foot.ejs') %>
+ </body>
 </html>

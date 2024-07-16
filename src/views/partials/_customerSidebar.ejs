@@ -1,57 +1,74 @@
-<aside class="sticky top-0 h-screen px-4 py-6 overflow-y-auto w-60 bg-base-200 rounder-r-lg">
-  <a class="btn btn-ghost" href="/">
-      <img alt="Logo" src="/assets/img/logo.png" class="w-6"/> 
+<aside class="sticky top-0 flex flex-col justify-between h-screen px-4 py-6 overflow-y-auto rounded-r-lg w-60 bg-base-200">
+    <div>
+        <a class="btn btn-ghost" href="/">
+            <img alt="Logo" src="/assets/img/logo.png" class="w-6" />
+            Travel Experts
+        </a>
 
-      Travel Experts
-  </a>
+        <ul class="px-0 menu">
+            <li class="menu-title">Profile</li>
+            <li>
+                <a href="/profile/customer">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    Personal Information
+                </a>
+            </li>
 
-  <ul class="px-0 menu">
-      <li class="menu-title">Analytics</li>
-      <li>
-          <a>
-              <i class="fa-solid fa-table-columns fa-fw"></i>
-              Dashboard
-          </a>
-      </li>
-      <li>
-          <a>
-              <i class="fa-solid fa-gauge-high fa-fw"></i>
-              Performance
-          </a>
-      </li>
+            <li>
+                <a>
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    Security
+                </a>
+            </li>
 
-      <li class="menu-title">Contents</li>
-      <li>
-          <a>
-              <i class="fa-solid fa-map fa-fw"></i>
-              Guides
-          </a>
-      </li>
-      <li>
-          <a>
-              <i class="fa-solid fa-arrows-rotate fa-fw"></i>
-              Hotspots
-          </a>
-      </li>
-      <li>
-          <a>
-              <i class="fa-solid fa-list-ul fa-fw"></i>
-              Checklists
-          </a>
-      </li>
+            <li>
+                <a>
+                    <ion-icon name="card-outline"></ion-icon>
+                    Payment Details
+                </a>
+            </li>
 
-      <li class="menu-title">Customization</li>
-      <li>
-          <a>
-              <i class="fa-solid fa-palette fa-fw"></i>
-              Themes
-          </a>
-      </li>
-      <li>
-          <a>
-              <i class="fa-solid fa-gear fa-fw"></i>
-              Configuration
-          </a>
-      </li>
-  </ul>
+            <li>
+                <a>
+                    <ion-icon name="document-lock-outline"></ion-icon>
+                    Privacy
+                </a>
+            </li>
+
+            <li class="menu-title">Customization</li>
+            <li>
+                <a>
+                    <ion-icon name="finger-print-outline"></ion-icon>
+                    Preferences
+                </a>
+            </li>
+
+            <li>
+                <a>
+                    <ion-icon name="construct-outline"></ion-icon>
+                    Configuration
+                </a>
+            </li>
+
+            <li>
+                <a>
+                    <ion-icon name="mail-unread-outline"></ion-icon>
+                    Email Notifications
+                </a>
+            </li>
+
+            <li>
+                <a>
+                    <ion-icon name="people-outline"></ion-icon>
+                    Other Travelers
+                </a>
+            </li>
+        </ul>
+    </div>
+    <form class="">
+        <button class="block text-white btn btn-error">
+            <ion-icon name="log-out"></ion-icon>
+            Logout
+        </button>
+    </form>
 </aside>
