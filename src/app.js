@@ -22,8 +22,9 @@ app.set('layout', 'layouts/main');
 app.set("layout extractScripts", true);
 
 // Static Files
-app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
-
+app.use('/assets', express.static(path.join(__dirname, '../public/assets'),{
+     extensions: ["png", "jpg", "jpeg", "svg", "gif", "css"]
+}));
 
 //Routes
 app.get('/', (req, res) => {
