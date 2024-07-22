@@ -1,0 +1,61 @@
+model Bookings {
+     BookingID     String   @id @default(cuid())
+     BookingDate   DateTime
+     TravelerCount Int
+     BookingNo     String   @default(cuid())
+     CustomerID    String
+     TripTypeID    String
+
+     TripType       TripType         @relation(fields: [TripTypeID], references: [TripTypeID])
+     Customers      Profile          @relation(fields: [CustomerID], references: [id])
+     BookingDetails BookingDetails[]
+}
+
+model BookingDetails {
+     BookingDetailID   String   @id @default(cuid())
+     Itenerary         String
+     Description       String
+     Destination       String
+     TripStartDate     DateTime
+     TripEndDate       DateTime
+     BasePrice         Float
+     AgencyCommission  Float
+     BookingID         String
+     RegionID          String
+     ClassID           String
+     FeeID             String
+     ProductSupplierID String
+
+     Products ProductSuppliers @relation(fields: [ProductSupplierID], references: [ID])
+     Fees     Fees             @relation(fields: [FeeID], references: [FeeID])
+     Classes  Classes          @relation(fields: [ClassID], references: [ClassID])
+     Regions  Regions          @relation(fields: [RegionID], references: [RegionID])
+     Booking  Bookings         @relation(fields: [BookingID], references: [BookingID])
+}
+
+model TripType {
+     TripTypeID String     @id @default(cuid())
+     TripType   String
+     Bookings   Bookings[]
+}
+
+model Classes {
+     ClassID        String           @id @default(cuid())
+     Name           String
+     Description    String
+     BookingDetails BookingDetails[]
+}
+
+model Fees {
+     FeeID          String           @id @default(cuid())
+     Name           String
+     Amount         Float
+     Description    String
+     BookingDetails BookingDetails[]
+}
+
+model Regions {
+     RegionID       String           @id @default(cuid())
+     Name           String
+     BookingDetails BookingDetails[]
+}

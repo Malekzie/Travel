@@ -1,12 +1,18 @@
 const express = require('express');
+// Middleware
 const isAuthenticated = require('../middleware/auth');
+
 const authController = require('../controller/authController');
 const { uploadProfilePictureHandler } = require('../controller/authController');
+
+
 const multer = require('multer');
 const router = express.Router();
 const upload = multer();
 
-router.get('/', isAuthenticated ,(req, res) => {
+
+
+router.get('/', isAuthenticated,(req, res) => {
      res.redirect('/profile')
 })
 

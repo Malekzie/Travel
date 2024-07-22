@@ -1,3 +1,4 @@
+// Also known as Customer
 model Profile {
      id          String    @id @default(uuid())
      username    String?
@@ -10,8 +11,9 @@ model Profile {
      gender      Gender?
      address     Address[]
 
-     userId String @unique
-     user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
+     userId   String     @unique
+     user     User       @relation(references: [id], fields: [userId], onDelete: Cascade)
+     Bookings Bookings[]
 }
 
 enum Gender {
@@ -21,13 +23,13 @@ enum Gender {
 }
 
 model Address {
-     id       String @id @default(uuid())
+     id       String  @id @default(uuid())
      address  String?
      city     String?
      province String?
      country  String?
      zip      String?
 
-     profileId String @unique
+     profileId String  @unique
      profile   Profile @relation(references: [id], fields: [profileId], onDelete: Cascade)
 }

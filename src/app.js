@@ -5,6 +5,8 @@ const expressLayouts = require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
 const authenticateJWT = require('./middleware/authenticateJWT');
 const attachUser = require('./middleware/attachUser');
+const rateLimiter = require('./middleware/rateLimiter');
+
 require('dotenv').config();
 
 app.use(express.json());
@@ -34,10 +36,13 @@ app.get('/', (req, res) => {
 
 // Routers
 const authRouter = require('./routes/authRouter');
-app.use('/auth', authRouter);
+app.use('/auth', rateLimiter, authRouter);
 
 const profileRouter = require('./routes/profileRouter');
 app.use('/profile', authenticateJWT, profileRouter);
+
+const packagesRouter = require('./routes/packagesRouter');
+app.use('/packages', packagesRouter);
 
 app.get('*', (req, res) => {
      res.render('pages/404', {title: 'Page Not Found', layout: false});

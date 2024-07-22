@@ -30,11 +30,10 @@
          </ul>
        </div>
        <a class="text-xl btn btn-ghost" href="/">Travel Experts</a>
-       <%- include ('../partials/_themeControl.ejs') %>
      </div>
      <div class="hidden navbar-center lg:flex">
        <ul class="px-1 menu menu-horizontal">
-         <li><a>Item 1</a></li>
+         <li><a href="/packages">Packages</a></li>
          <li>
            <details>
              <summary>Parent</summary>
@@ -56,5 +55,8 @@
       <% } else { %>
           <a class="btn" href="/auth">Profile</a>
       <% } %>
+      <div class="mx-2">
+        <%- include ('../partials/_themeControl.ejs') %>
+      </div>
   </div>
    </div>

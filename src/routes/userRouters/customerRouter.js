@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const profileController = require('../../controller/profileController');
 const profileRepository = require('../../repositories/profileRepository');
+const addressRepository = require('../../repositories/addressRepository');
 
 // Example Customer Route
 router.get('/', profileController.getProfile, (req, res) => {
@@ -17,7 +18,7 @@ router.post('/update-profile', async (req, res) => {
     const userId = req.user.id; // Assuming you have the user ID in the session or request object
 
     try {
-        await profileRepository.updateProfile(userId, data);
+        await profileRepository.update(userId, data);
         res.redirect('/profile'); // Redirect to the profile page or another relevant page
     } catch (error) {
         console.error('Error updating profile:', error);
@@ -28,10 +29,10 @@ router.post('/update-profile', async (req, res) => {
 router.post('/update-address', async (req, res) => {
     const { address } = req.body;
     const userId = req.user.id
-    const profile = await profileRepository.findProfileByUserId(userId);
+    const profile = await profileRepository.findById(userId);
     const profileId = profile.id;
     try {
-        await profileRepository.updateAddress(profileId, address);
+        await addressRepository.update(profileId, address);
         res.redirect('/profile'); // Redirect to the profile page or another relevant page
     } catch (error) {
         console.error('Error updating address:', error);

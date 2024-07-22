@@ -1,0 +1,42 @@
+model Packages {
+     ID                      String                    @id @default(uuid())
+     Name                    String
+     Description             String
+     Price                   Float
+     AgencyCommission        Float
+     StartDate               DateTime
+     EndDate                 DateTime
+     PackageProductSuppliers PackageProductSuppliers[]
+}
+
+model Products {
+     ID               String             @id @default(uuid())
+     Name             String
+     ProductSuppliers ProductSuppliers[]
+}
+
+model Suppliers {
+     ID               String             @id @default(uuid())
+     Name             String
+     ProductSuppliers ProductSuppliers[]
+}
+
+model ProductSuppliers {
+     ID         String @id @default(uuid())
+     ProductID  String
+     SupplierID String
+
+     Product                 Products                  @relation(references: [ID], fields: [ProductID], onDelete: Cascade)
+     Supplier                Suppliers                 @relation(references: [ID], fields: [SupplierID], onDelete: Cascade)
+     PackageProductSuppliers PackageProductSuppliers[]
+     BookingDetails          BookingDetails[]
+}
+
+model PackageProductSuppliers {
+     ID                String @id @default(uuid())
+     PackageID         String
+     ProductSupplierID String
+
+     Package         Packages         @relation(references: [ID], fields: [PackageID], onDelete: Cascade)
+     ProductSupplier ProductSuppliers @relation(references: [ID], fields: [ProductSupplierID], onDelete: Cascade)
+}
