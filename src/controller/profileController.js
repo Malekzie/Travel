@@ -2,7 +2,7 @@
 const profileService = require('../services/profileService');
 
 const getProfile = async (req, res) => {
-    try {
+    
         const userId = req.user.id; // Assuming `req.user.id` contains the logged-in user's ID.
         const profile = await profileService.getProfile(userId);
         const address = await profileService.getAddress(profile.id);
@@ -17,9 +17,7 @@ const getProfile = async (req, res) => {
             profile: profile,
             address: address
         });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+
 };
 
 

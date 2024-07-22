@@ -7,7 +7,7 @@ const db = require('../repositories/prisma');
 
 const register = async (data) => {
     //Check if user exists
-    const existingUser = await userRepository.findUserByEmail(data.email);
+    const existingUser = await userRepository.findByEmail(data.email);
 
     if (existingUser) {
         throw new Error('User already exists');
@@ -37,7 +37,7 @@ const register = async (data) => {
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getHours() + 1);
 
-    await sessionRepository.createSession({
+    await sessionRepository.create({
         userId: newUser.id,
         expiresAt,
     });
@@ -50,7 +50,7 @@ const register = async (data) => {
 const login = async (data) => {
     const { email, password } = data;
 
-    const user = await userRepository.findUserByEmail(email);
+    const user = await userRepository.findByEmail(email);
 
     if (!user) {
         console.error('User or password not found');

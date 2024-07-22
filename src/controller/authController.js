@@ -2,7 +2,6 @@ require('dotenv').config();
 const validate = require('../utils/validator');
 const userService = require('../services/userService');
 const jwt = require('../utils/jwt');
-const { uploadProfilePicture } = require('../services/userService');
 
 const register = async (req, res) => {
     const data = req.body;
@@ -67,22 +66,40 @@ const login = async (req, res) => {
 
 
 const refresh = async (req, res) => {
-     const { refreshToken } = req.body;
+    const { refreshToken } = req.cookies;
 
-     if (!refreshToken) {
-          return res.status(400).send('Refresh token is required');
-     }
+    if (!refreshToken) {
+        return res.status(401).json({ message: 'Refresh token required' });
+    }
 
-     try {
-          const user = await jwt.verifyRefreshToken(refreshToken);
-          
-          const newToken = jwt.generateToken(user);
+    try {
+        const user = await jwt.verifyRefreshToken(refreshToken);
 
-          res.json({ token: newToken });
-     } catch(error) {
-          console.error("Refresh token error:", error);
-          res.status(403).send('Invalid Refresh Token');
-     }
+        // Check if the user still exists
+        const existingUser = await userService.findUserById(user.id);
+        if (!existingUser) {
+            return res.status(401).json({ message: 'User not found' });
+        }
+
+        const newToken = jwt.generateToken(existingUser);
+        const newRefreshToken = jwt.generateRefreshToken(existingUser);
+
+        res.cookie('token', newToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        });
+
+        res.cookie('refreshToken', newRefreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        });
+
+        res.json({ token: newToken });
+    } catch (error) {
+        res.status(403).json({ message: 'Invalid refresh token' });
+    }
 }
 
 

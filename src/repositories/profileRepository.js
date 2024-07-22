@@ -1,58 +1,61 @@
+// profileRepository.js
+
 const db = require('./prisma');
+const { convertDateToISO } = require('../utils/dateUtils');
+const BaseRepository = require('./baseRepository');
 
-const findProfileByUserId = async (userId) => {
-     return await db.profile.findUnique({
-          where: { userId },
-          include: {
-               address: true
-          },
-          cacheStrategy: {
-               ttl: 60
-          }
-     });
-};
+class ProfileRepository extends BaseRepository {
+    async findById(userId) {
+        return await db.profile.findFirst({
+            where: { userId },
+            include: {
+                address: true
+            }
+        });
+    }
 
-const updateProfile = async (userId, data) => {
-     return await db.profile.update({
-          where: { userId },
-          data
-     });
-};
+    async findAll() {
+        return await db.profile.findMany({
+            include: {
+                address: true
+            }
+        });
+    }
 
-const findAddressByProfileId = async (profileId) => {
-     return await db.address.findUnique({
-          where: { profileId }
-     });
+    async create(data) {
+        return await db.profile.create({
+            data
+        });
+    }
+
+    async update(userId, data) {
+        const profile = await this.findById(userId);
+
+        if (!profile) {
+            throw new Error('Profile not found');
+        }
+
+        if (data.dateOfBirth) {
+            data.dateOfBirth = convertDateToISO(data.dateOfBirth);
+        }
+
+        return await db.profile.update({
+            where: { id: profile.id },
+            data
+        });
+    }
+
+    async delete(userId) {
+        const profile = await this.findById(userId);
+
+        if (!profile) {
+            throw new Error('Profile not found');
+        }
+
+        return await db.profile.delete({
+            where: { id: profile.id }
+        });
+    }
 }
 
-// profileRepository code
-const updateAddress = async (profileId, addressData) => {
-     return await db.address.upsert({
-         where: { profileId },
-         update: {
-             address: addressData.address,
-             city: addressData.city,
-             province: addressData.province,
-             country: addressData.country,
-             zip: addressData.zip
-         },
-         create: {
-             id: addressData.id, // Make sure to include the ID if necessary
-             profileId,
-             address: addressData.address,
-             city: addressData.city,
-             province: addressData.province,
-             country: addressData.country,
-             zip: addressData.zip
-         }
-     });
- };
- 
-
-
-module.exports = {
-     findProfileByUserId,
-     updateProfile,
-     findAddressByProfileId,
-     updateAddress
-}
+module.exports = new ProfileRepository();
