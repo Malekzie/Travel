@@ -6,12 +6,21 @@ const BaseRepository = require('./baseRepository');
 class AddressRepository extends BaseRepository {
     async findById(profileId) {
         return await db.address.findFirst({
-            where: { profileId }
+            where: { profileId },
+            cacheStrategy: {
+                ttl: 40,
+                swr: 60
+            }
         });
     }
 
     async findAll() {
-        return await db.address.findMany();
+        return await db.address.findMany({
+            cacheStrategy: {
+                ttl: 40,
+                swr: 60
+            }
+        });
     }
 
     async create(data) {
@@ -31,7 +40,11 @@ class AddressRepository extends BaseRepository {
 
         return await db.address.update({
             where: { profileId },
-            data: updateData
+            data: updateData,
+            cacheStrategy: {
+                ttl: 40,
+                swr: 60
+            }
         });
     }
 

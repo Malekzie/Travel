@@ -10,6 +10,10 @@ class ProfileRepository extends BaseRepository {
             where: { userId },
             include: {
                 address: true
+            },
+            cacheStrategy: {
+                ttl: 40,
+                swr: 60
             }
         });
     }
@@ -18,6 +22,10 @@ class ProfileRepository extends BaseRepository {
         return await db.profile.findMany({
             include: {
                 address: true
+            },
+            cacheStrategy: {
+                ttl: 40,
+                swr: 60
             }
         });
     }

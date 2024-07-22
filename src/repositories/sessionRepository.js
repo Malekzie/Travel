@@ -12,12 +12,21 @@ class SessionRepository extends BaseRepository {
 
     async findById(id) {
         return await db.session.findUnique({
-            where: { id }
+            where: { id },
+            cacheStrategy: {
+                ttl: 40,
+                swr: 60
+            }
         });
     }
 
     async findAll() {
-        return await db.session.findMany();
+        return await db.session.findMany({
+            cacheStrategy: {
+                ttl: 40,
+                swr: 60
+            }
+        });
     }
 
     async update(id, data) {
